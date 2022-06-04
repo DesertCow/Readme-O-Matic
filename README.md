@@ -80,6 +80,7 @@ WHEN I enter my email address<br>
 <h3 align="center">⚡ ⚡ App Demo ⚡ ⚡</h3>
 
 ---
+ Walkthrough video...<br>
 <p align="center">
   <img src="./assets/devMeta/Final_Demo.gif" alt="Demo of Weather App")
 </p>
