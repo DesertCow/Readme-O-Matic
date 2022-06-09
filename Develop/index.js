@@ -2,10 +2,13 @@
 // Clayton Skaggs 6-9-22
 //
 // Installed inquirer vis "npm install inquirer" command
+// - npm install @octokit/core
+// - npm install inquirer
 //
 
 const fs = require('fs');
 const inquirer = require('inquirer');
+const { Octokit } = require("@octokit/core");
 
 // List of Questions
 const questions = [
@@ -20,7 +23,7 @@ const questions = [
   "Please Enter your GitHub Email:",
 ];
 
-const listOfLicenses = ["MIT license", "Apache License 2.0", "GNU General Public License (GPL)", "Common Development and Distribution License 1.0"];
+const listOfLicenses = ["MIT", "GPLv3", "GPLv2", "Apache"];
 
 const readmeInput = {
   proTitle: "",
@@ -162,38 +165,22 @@ async function getUserInput() {
 
                                       //console.log(readmeInput);
                                       generateREADME(readmeInput);
+                                      addLicense(readmeInput.proLicense);
                                       return true;
 
                                     });
 
-
-
                                 });
-
-
 
                             });
 
-
-
                         });
-
-
-
 
                     });
 
-
-
-
-
                 });
 
-
-
-
             });
-
 
         });
     });
@@ -235,6 +222,30 @@ function generateREADME(data) {
   console.log(data);
 
 };
+
+function addLicense(license) {
+
+
+  // fetchLIC(license);
+
+  if()
+  console.log("License Function PRINT");
+  console.log(license);
+
+};
+
+// async function fetchLIC(lic) {
+//   // Octokit.js
+//   // https://github.com/octokit/core.js#readme
+//   const octokit = new Octokit({
+//     auth: "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"
+//   })
+
+  await octokit.request('GET /licenses', {
+    console.log()
+  })
+}
+
 
 // ============= Init =============
 init();
