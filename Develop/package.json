@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^6.3.1"
+    "@octokit/core": "^3.6.0",
+    "inquirer": "^6.5.2"
   }
 }
