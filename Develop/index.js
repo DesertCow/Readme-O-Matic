@@ -6,6 +6,15 @@
 // - npm install inquirer
 //
 
+// const key = {
+//   method: 'GET',
+//   headers: {
+//     accept: 'application/json',
+//     'X-RapidAPI-Host': 'matchilling-chuck-norris-jokes-v1.p.rapidapi.com',
+//     'X-RapidAPI-Key': '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'
+//   }
+// };
+
 const fs = require('fs');
 const inquirer = require('inquirer');
 const { Octokit } = require("@octokit/core");
@@ -37,12 +46,8 @@ const readmeInput = {
   userEmail: ""
 };
 
-var userInputFlag = true;
+//########################### Functions ###########################
 
-
-
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) { }
 
 // TODO: Create a function to initialize app
 function init() {
@@ -65,6 +70,8 @@ async function getUserInput() {
     .then(answers => {
       readmeInput.proTitle = answers.proTitle;
       // console.info('Answer:', readmeInput.proTitle);
+
+      var userInputFlag = true;
 
       inquirer
         .prompt([
@@ -216,10 +223,133 @@ async function getUserInput() {
   //   });
 };
 
-function generateREADME(data) {
+async function generateREADME(data) {
 
-  console.log("README Function PRINT");
-  console.log(data);
+  // console.log("README Function PRINT");
+  // console.log(data);
+  // console.log(`${process.argv[2]}\n`);
+
+  let titleHeader = `
+
+  <h2 align="center">${readmeInput.proTitle}</h2>
+
+  ---
+  `;
+
+
+
+  let proDescription = `
+
+  <h3 align="center">📢 📢 Description 📢 📢</h3>
+
+  ----
+  <p align="center">${readmeInput.proDescription}</p>
+
+
+  <br>
+  <br>
+  `;
+
+  let installDescription = `
+
+  <h3 align="center">📢 📢 Installation 📢 📢</h3>
+
+  ----
+  <p align="center">${readmeInput.proInstall}</p>
+
+
+  <br>
+  <br>
+  `;
+
+  let usageDescription = `
+
+  <h3 align="center">📢 📢 Usage 📢 📢</h3>
+
+  ----
+  <p align="center">${readmeInput.proUsage}</p>
+
+
+  <br>
+  <br>
+  `;
+
+  let contributionDescription = `
+
+  <h3 align="center">📢 📢 Contribution Guidelines 📢 📢</h3>
+
+  ----
+  <p align="center">${readmeInput.proContributionGuide}</p>
+
+
+  <br>
+  <br>
+  `;
+
+  let testDescription = `
+
+  <h3 align="center">📢 📢 Test Instructions 📢 📢</h3>
+
+  ----
+  <p align="center">${readmeInput.proTestInstuctions}</p>
+
+
+  <br>
+  <br>
+  `;
+
+  let licenseDescription = `
+
+  <h3 align="center">📢 📢 Project License 📢 📢</h3>
+
+  ----
+  <p align="center">This project is licensed under the terms of the ${readmeInput.proLicense} license.</p>
+  
+
+
+  <br>
+  <br>
+  `;
+
+  let contactInfo = `
+
+  <h3 align="center">📢 📢 Contact Information 📢 📢</h3>
+
+  ----
+  <p align="center">Author GitHub: <a href="https://github.com/${readmeInput.userGitHub}">https://github.com/DesertCow</a></p>
+  <p align="center">Author Email: <a href="mailto:${readmeInput.userEmail}">${readmeInput.userEmail}</a></p>
+
+
+
+  <br>
+  <br>
+  `;
+
+
+  fs.appendFile('README.md', `${titleHeader}\n`, () => {
+    fs.appendFile('README.md', `${proDescription}\n`, () => {
+      fs.appendFile('README.md', `${installDescription}\n`, () => {
+        fs.appendFile('README.md', `${usageDescription}\n`, () => {
+          fs.appendFile('README.md', `${contributionDescription}\n`, () => {
+            fs.appendFile('README.md', `${testDescription}\n`, () => {
+              fs.appendFile('README.md', `${licenseDescription}\n`, () => {
+                fs.appendFile('README.md', `${contactInfo}\n`, () => {
+
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+
+
+  //  test instructions
+
+  // TODO: Describe how this ternary operator works
+  // err ? console.error("FAIL: " + err) : console.log('Commit logged!  ||  ' + `Full Path: ${process.argv[1]}`)
+  // );
 
 };
 
@@ -228,9 +358,8 @@ function addLicense(license) {
 
   // fetchLIC(license);
 
-  if()
-  console.log("License Function PRINT");
-  console.log(license);
+  console.log(`This project is licensed under the terms of the ${license} license.`);
+  // console.log(license);
 
 };
 
@@ -241,11 +370,45 @@ function addLicense(license) {
 //     auth: "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"
 //   })
 
-  await octokit.request('GET /licenses', {
-    console.log()
-  })
-}
+// await octokit.request('GET /licenses', {
+//   console.log()
+// })
+// }
 
+async function getLicenseInfo() {
+
+  var apiURL = "https://www.themealdb.com/api/json/v1/1/random.php";
+
+  fetch(apiURL)
+    .then(function (respone) {
+
+      if (respone.status != 200) {
+        console.log("ERROR API(" + respone.status + ") from " + apiURL);
+      } else {
+        return respone.json();
+      }
+      return;
+
+    })
+    .then(function (data) {
+
+      summary.mealName = data.meals[0].strMeal;
+      summary.mealInstructions = data.meals[0].strInstructions;
+      summary.mealPictureURL = data.meals[0].strMealThumb;
+      summary.mealYouTubeURL = data.meals[0].strYoutube;
+
+      recipeCardNameTitleEL.textContent = summary.mealName;
+      recipeImgEL.src = summary.mealPictureURL;
+      recipeCardFullrecipeEL.textContent = summary.mealInstructions;
+
+      titleDrinkEL.textContent = summary.drinkName;
+      recipeNameTitleEL.textContent = summary.mealName;
+
+      updateSessionStore();
+
+      return;
+    })
+}
 
 // ============= Init =============
 init();
