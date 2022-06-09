@@ -57,8 +57,7 @@ function init() {
 
 };
 
-async function getUserInput() {
-
+function getUserInput() {
 
   inquirer
     .prompt([
@@ -67,161 +66,65 @@ async function getUserInput() {
         name: 'proTitle',
         message: questions[0],
       },
+      {
+        type: 'input',
+        name: 'proDescription',
+        message: questions[1],
+      },
+      {
+        type: 'input',
+        name: 'proInstall',
+        message: questions[2],
+      },
+      {
+        type: 'input',
+        name: 'proUsage',
+        message: questions[3],
+      },
+      {
+        type: 'input',
+        name: 'proContributionGuide',
+        message: questions[4],
+      },
+      {
+        type: 'input',
+        name: 'proTestInstuctions',
+        message: questions[5],
+      },
+      {
+        type: 'rawlist',
+        name: 'proLicense',
+        choices: listOfLicenses,
+        message: questions[6],
+      },
+      {
+        type: 'input',
+        name: 'userGitHub',
+        message: questions[7],
+      },
+      {
+        type: 'input',
+        name: 'userEmail',
+        message: questions[8],
+      },
     ])
     .then(answers => {
       readmeInput.proTitle = answers.proTitle;
-      // console.info('Answer:', readmeInput.proTitle);
+      readmeInput.proDescription = answers.proDescription;
+      readmeInput.proInstall = answers.proInstall;
+      readmeInput.proUsage = answers.proUsage;
+      readmeInput.proContributionGuide = answers.proContributionGuide;
+      readmeInput.proTestInstuctions = answers.proTestInstuctions;
+      readmeInput.proLicense = answers.proLicense;
+      readmeInput.userGitHub = answers.userGitHub;
+      readmeInput.userEmail = answers.userEmail;
+      // console.info('Answer:', readmeInput.proLicense);
 
-      var userInputFlag = true;
+      //console.log(readmeInput);
+      generateREADME(readmeInput);
+      return true;
 
-      inquirer
-        .prompt([
-          {
-            type: 'input',
-            name: 'proDescription',
-            message: questions[1],
-          },
-        ])
-        .then(answers => {
-          readmeInput.proDescription = answers.proDescription;
-          // console.info('Answer:', readmeInput.proDescription);
-
-          inquirer
-            .prompt([
-              {
-                type: 'input',
-                name: 'proInstall',
-                message: questions[2],
-              },
-            ])
-            .then(answers => {
-              readmeInput.proInstall = answers.proInstall;
-              // console.info('Answer:', readmeInput.proInstall);
-
-              inquirer
-                .prompt([
-                  {
-                    type: 'input',
-                    name: 'proUsage',
-                    message: questions[3],
-                  },
-                ])
-                .then(answers => {
-                  readmeInput.proUsage = answers.proUsage;
-                  // console.info('Answer:', readmeInput.proUsage);
-
-                  inquirer
-                    .prompt([
-                      {
-                        type: 'input',
-                        name: 'proContributionGuide',
-                        message: questions[4],
-                      },
-                    ])
-                    .then(answers => {
-                      readmeInput.proContributionGuide = answers.proContributionGuide;
-                      // console.info('Answer:', readmeInput.proContributionGuide);
-
-                      inquirer
-                        .prompt([
-                          {
-                            type: 'input',
-                            name: 'proTestInstuctions',
-                            message: questions[5],
-                          },
-                        ])
-                        .then(answers => {
-                          readmeInput.proTestInstuctions = answers.proTestInstuctions;
-                          // console.info('Answer:', readmeInput.proTestInstuctions);
-
-                          inquirer
-                            .prompt([
-                              {
-                                type: 'rawlist',
-                                name: 'proLicense',
-                                choices: listOfLicenses,
-                                message: questions[6],
-                              },
-                            ])
-                            .then(answers => {
-                              readmeInput.proLicense = answers.proLicense;
-                              // console.info('Answer:', readmeInput.proLicense);
-                              setLicenseBadge(readmeInput.proLicense);
-
-                              inquirer
-                                .prompt([
-                                  {
-                                    type: 'input',
-                                    name: 'userGitHub',
-                                    message: questions[7],
-                                  },
-                                ])
-                                .then(answers => {
-                                  readmeInput.userGitHub = answers.userGitHub;
-                                  // console.info('Answer:', readmeInput.proLicense);
-
-                                  inquirer
-                                    .prompt([
-                                      {
-                                        type: 'input',
-                                        name: 'userEmail',
-                                        message: questions[8],
-                                      },
-                                    ])
-                                    .then(answers => {
-                                      readmeInput.userEmail = answers.userEmail;
-                                      // console.info('Answer:', readmeInput.proLicense);
-
-                                      //console.log(readmeInput);
-                                      generateREADME(readmeInput);
-                                      return true;
-
-                                    });
-
-                                });
-
-                            });
-
-                        });
-
-                    });
-
-                });
-
-            });
-
-        });
     });
-
-
-
-  // inquirer
-  //   .prompt([
-  //     {
-  //       type: 'rawlist',
-  //       name: 'proTitle',
-  //       message: questions[0],
-  //       choices: ['1', '2'],
-  //     },
-  //   ])
-  //   .then(answers => {
-  //     console.info('Answer:', answers.faveReptile);
-  //   });
-
-
-  // var inquirer = require('inquirer');
-  // inquirer
-  //   .prompt(questions)
-  //   .then((answers) => {
-  //     // Use user feedback for... whatever!!
-  //   })
-  //   .catch((error) => {
-  //     if (error.isTtyError) {
-  //       // Prompt couldn't be rendered in the current environment
-  //     } else {
-  //       // Something else went wrong
-  //     }
-  //   });
 };
 
 async function generateREADME(data) {
@@ -361,33 +264,8 @@ async function generateREADME(data) {
   <br>
   `;
 
+  fs.appendFile('README.md', `${titleHeader}\n${proDescription}\n${tableOfContents}\n${installDescription}\n${usageDescription}\n${contributionDescription}\n${testDescription}\n${licenseDescription}\n${contactInfo}\n`, () => { })
 
-  fs.appendFile('README.md', `${titleHeader}\n`, () => {
-    fs.appendFile('README.md', `${proDescription}\n`, () => {
-      fs.appendFile('README.md', `${tableOfContents}\n`, () => {
-        fs.appendFile('README.md', `${installDescription}\n`, () => {
-          fs.appendFile('README.md', `${usageDescription}\n`, () => {
-            fs.appendFile('README.md', `${contributionDescription}\n`, () => {
-              fs.appendFile('README.md', `${testDescription}\n`, () => {
-                fs.appendFile('README.md', `${licenseDescription}\n`, () => {
-                  fs.appendFile('README.md', `${contactInfo}\n`, () => {
-
-                  })
-                })
-              })
-            })
-          })
-        })
-      })
-    })
-  })
-
-
-  //  test instructions
-
-  // TODO: Describe how this ternary operator works
-  // err ? console.error("FAIL: " + err) : console.log('Commit logged!  ||  ' + `Full Path: ${process.argv[1]}`)
-  // );
 
 };
 
