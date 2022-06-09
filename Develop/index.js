@@ -255,7 +255,7 @@ async function generateREADME(data) {
   <h3 align="center">📢 📢 Installation 📢 📢</h3>
 
   ----
-  <p align="center">${readmeInput.proInstall}</p>
+  <p align="left">${readmeInput.proInstall}</p>
 
 
   <br>
@@ -267,7 +267,7 @@ async function generateREADME(data) {
   <h3 align="center">📢 📢 Usage 📢 📢</h3>
 
   ----
-  <p align="center">${readmeInput.proUsage}</p>
+  <p align="left">${readmeInput.proUsage}</p>
 
 
   <br>
@@ -279,7 +279,7 @@ async function generateREADME(data) {
   <h3 align="center">📢 📢 Contribution Guidelines 📢 📢</h3>
 
   ----
-  <p align="center">${readmeInput.proContributionGuide}</p>
+  <p align="left">${readmeInput.proContributionGuide}</p>
 
 
   <br>
@@ -291,7 +291,7 @@ async function generateREADME(data) {
   <h3 align="center">📢 📢 Test Instructions 📢 📢</h3>
 
   ----
-  <p align="center">${readmeInput.proTestInstuctions}</p>
+  <p align="left">${readmeInput.proTestInstuctions}</p>
 
 
   <br>
@@ -313,7 +313,7 @@ async function generateREADME(data) {
 
   let contactInfo = `
 
-  <h3 align="center">📢 📢 Contact Information 📢 📢</h3>
+  <h3 align="center">📢 📢 Questions/Contact Information 📢 📢</h3>
 
   ----
   <p align="center">Author GitHub: <a href="https://github.com/${readmeInput.userGitHub}">https://github.com/DesertCow</a></p>
