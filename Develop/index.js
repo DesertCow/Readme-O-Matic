@@ -42,6 +42,7 @@ const readmeInput = {
   proContributionGuide: "",
   proTestInstuctions: "",
   proLicense: "",
+  licenseBadge: "",
   userGitHub: "",
   userEmail: ""
 };
@@ -145,6 +146,7 @@ async function getUserInput() {
                             .then(answers => {
                               readmeInput.proLicense = answers.proLicense;
                               // console.info('Answer:', readmeInput.proLicense);
+                              setLicenseBadge(readmeInput.proLicense);
 
                               inquirer
                                 .prompt([
@@ -172,7 +174,6 @@ async function getUserInput() {
 
                                       //console.log(readmeInput);
                                       generateREADME(readmeInput);
-                                      addLicense(readmeInput.proLicense);
                                       return true;
 
                                     });
@@ -232,7 +233,11 @@ async function generateREADME(data) {
   let titleHeader = `
 
   <h2 align="center">${readmeInput.proTitle}</h2>
+  <div align="center">
 
+  ${readmeInput.licenseBadge}
+
+  </div>
   ---
   `;
 
@@ -250,9 +255,27 @@ async function generateREADME(data) {
   <br>
   `;
 
+  let tableOfContents = `
+  
+  <h3 align="center">📢 📢 Table Of Contents 📢 📢</h3>
+  
+  ----
+  [Installation](#install)
+  [Usage](#usage)
+  [Contribution Guidelines](#guide)
+  [Test Instructions](#test)
+  [Project License](#license)
+  [Contact Information](#contact)
+
+  <br>
+  <br>
+  `;
+
   let installDescription = `
 
+  <a name="install">
   <h3 align="center">📢 📢 Installation 📢 📢</h3>
+  </a>
 
   ----
   <p align="left">${readmeInput.proInstall}</p>
@@ -264,8 +287,10 @@ async function generateREADME(data) {
 
   let usageDescription = `
 
+  <a name="usage">
   <h3 align="center">📢 📢 Usage 📢 📢</h3>
-
+  </a>
+  
   ----
   <p align="left">${readmeInput.proUsage}</p>
 
@@ -276,8 +301,10 @@ async function generateREADME(data) {
 
   let contributionDescription = `
 
+  <a name="guide">
   <h3 align="center">📢 📢 Contribution Guidelines 📢 📢</h3>
-
+  </a>
+  
   ----
   <p align="left">${readmeInput.proContributionGuide}</p>
 
@@ -288,8 +315,10 @@ async function generateREADME(data) {
 
   let testDescription = `
 
+  <a name="test">
   <h3 align="center">📢 📢 Test Instructions 📢 📢</h3>
-
+  </a>
+  
   ----
   <p align="left">${readmeInput.proTestInstuctions}</p>
 
@@ -300,12 +329,17 @@ async function generateREADME(data) {
 
   let licenseDescription = `
 
+  <a name="license">
   <h3 align="center">📢 📢 Project License 📢 📢</h3>
-
+  </a>
+  
   ----
   <p align="center">This project is licensed under the terms of the ${readmeInput.proLicense} license.</p>
-  
+  <div align="center">
 
+  ${readmeInput.licenseBadge}
+
+  </div>
 
   <br>
   <br>
@@ -313,10 +347,12 @@ async function generateREADME(data) {
 
   let contactInfo = `
 
+  <a name="contact">
   <h3 align="center">📢 📢 Questions/Contact Information 📢 📢</h3>
-
+  </a>
+  
   ----
-  <p align="center">Author GitHub: <a href="https://github.com/${readmeInput.userGitHub}">https://github.com/DesertCow</a></p>
+  <p align="center">Author GitHub: <a href="https://github.com/${readmeInput.userGitHub}">https://github.com/${readmeInput.userGitHub}</a></p>
   <p align="center">Author Email: <a href="mailto:${readmeInput.userEmail}">${readmeInput.userEmail}</a></p>
 
 
@@ -328,13 +364,15 @@ async function generateREADME(data) {
 
   fs.appendFile('README.md', `${titleHeader}\n`, () => {
     fs.appendFile('README.md', `${proDescription}\n`, () => {
-      fs.appendFile('README.md', `${installDescription}\n`, () => {
-        fs.appendFile('README.md', `${usageDescription}\n`, () => {
-          fs.appendFile('README.md', `${contributionDescription}\n`, () => {
-            fs.appendFile('README.md', `${testDescription}\n`, () => {
-              fs.appendFile('README.md', `${licenseDescription}\n`, () => {
-                fs.appendFile('README.md', `${contactInfo}\n`, () => {
+      fs.appendFile('README.md', `${tableOfContents}\n`, () => {
+        fs.appendFile('README.md', `${installDescription}\n`, () => {
+          fs.appendFile('README.md', `${usageDescription}\n`, () => {
+            fs.appendFile('README.md', `${contributionDescription}\n`, () => {
+              fs.appendFile('README.md', `${testDescription}\n`, () => {
+                fs.appendFile('README.md', `${licenseDescription}\n`, () => {
+                  fs.appendFile('README.md', `${contactInfo}\n`, () => {
 
+                  })
                 })
               })
             })
@@ -353,15 +391,28 @@ async function generateREADME(data) {
 
 };
 
-function addLicense(license) {
+function setLicenseBadge(license) {
 
+  if (license === "MIT") {
 
-  // fetchLIC(license);
+    readmeInput.licenseBadge = "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
 
-  console.log(`This project is licensed under the terms of the ${license} license.`);
-  // console.log(license);
+  } else if (license === "GPLv3") {
 
-};
+    readmeInput.licenseBadge = "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)";
+
+  } else if (license === "GPLv2") {
+
+    readmeInput.licenseBadge = "[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)";
+
+  } else if (license === "Apache") {
+
+    readmeInput.licenseBadge = "[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
+
+  }
+
+  //console.log("Badge Text: " + readmeInput.licenseBadge);
+}
 
 // async function fetchLIC(lic) {
 //   // Octokit.js
