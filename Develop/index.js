@@ -24,6 +24,9 @@ const questions = [
   "Please Enter your GitHub Email:",
 ];
 
+// Set Copyright Year
+const copyYear = "2022";
+
 //? List of License choices 
 const listOfLicenses = ["mit", "gpl-3.0", "gpl-2.0", "apache-2.0"];
 
@@ -290,7 +293,7 @@ async function generateREADME(data) {
   // Generate Readme based on sections defined above
   fs.appendFile('README.md', `${titleHeader}\n${proDescription}\n${tableOfContents}\n${installDescription}\n${usageDescription}\n${contributionDescription}\n${testDescription}\n${licenseDescription}\n${contactInfo}\n`, () => { });
   console.log(`\x1b[43m============= README.md Created! ==============\x1b[0m`);
-  console.log(`\x1b[46m=========== Tool Complete, Goodbye! ===========\x1b[0m`);
+  console.log(`\x1b[46m=================== Goodbye! ==================\x1b[0m`);
 
 };
 
@@ -317,14 +320,30 @@ function setLicenseBadge(license) {
 
 }
 
+// ?============= generateLicenseFile =============
+function generateLicenseFile(licText) {
+  fs.appendFile('LICENSE.txt', `${licText}\n`, () => { });
+  console.log(`\x1b[43m============ LICENSE.txt Created! =============\x1b[0m`);
+
+}
+
 // ?============= API callback =============
 function callback(error, response, body) {
 
   if (error) { return console.log(error); }
-  body = JSON.parse(body)
+
+  body = JSON.parse(body);
+
+  // Search License files for year or name place holders and updates
+  body.body = body.body.replace("[year]", copyYear);
+  body.body = body.body.replace("[yyyy]", copyYear);
+  body.body = body.body.replace("[fullname]", readmeInput.userGitHub);
+  body.body = body.body.replace("[name of copyright owner]", readmeInput.serGitHub);
 
   licenseReadName = body.name
   licenseBody = body.description;
+
+  generateLicenseFile(body.body);
 
   setLicenseBadge(readmeInput.proLicense);
 
