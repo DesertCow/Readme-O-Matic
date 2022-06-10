@@ -24,8 +24,8 @@ const questions = [
   "Please Enter your GitHub Email:",
 ];
 
+// Set Copyright Year
 const copyYear = "2022";
-const copyName = "Desert Cow";
 
 //? List of License choices 
 const listOfLicenses = ["mit", "gpl-3.0", "gpl-2.0", "apache-2.0"];
@@ -333,10 +333,12 @@ function callback(error, response, body) {
   if (error) { return console.log(error); }
 
   body = JSON.parse(body);
+
+  // Search License files for year or name place holders and updates
   body.body = body.body.replace("[year]", copyYear);
   body.body = body.body.replace("[yyyy]", copyYear);
-  body.body = body.body.replace("[fullname]", copyName);
-  body.body = body.body.replace("[name of copyright owner]", copyName);
+  body.body = body.body.replace("[fullname]", readmeInput.userGitHub);
+  body.body = body.body.replace("[name of copyright owner]", readmeInput.serGitHub);
 
   licenseReadName = body.name
   licenseBody = body.description;
