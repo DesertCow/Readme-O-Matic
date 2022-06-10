@@ -76,13 +76,13 @@ WHEN I enter my email address<br>
 ---
 <h4>Demo Video I</h4><br>
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/yfEyAt2Af7c/0.jpg)](https://www.youtube.com/watch?v=yfEyAt2Af7c)
+[![Demo Video Screen Shot](https://img.youtube.com/vi/yfEyAt2Af7c/0.jpg)](https://www.youtube.com/watch?v=yfEyAt2Af7c)
 
 <br>
 <br>
 <h4>Demo Video II</h4><br>
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/tiGZktlOKZw/0.jpg)](https://www.youtube.com/watch?v=tiGZktlOKZw)
+[![Demo Video Screen Shot](https://img.youtube.com/vi/tiGZktlOKZw/0.jpg)](https://www.youtube.com/watch?v=tiGZktlOKZw)
 
 <br>
 <br>
