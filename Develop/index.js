@@ -9,7 +9,6 @@
 //? Import Statments
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { Octokit } = require("@octokit/core");
 const request = require('request');
 
 //? List of Questions
@@ -124,10 +123,8 @@ async function getUserInput() {
       readmeInput.proLicense = answers.proLicense;
       readmeInput.userGitHub = answers.userGitHub;
       readmeInput.userEmail = answers.userEmail;
-      // console.info('Answer:', readmeInput.proLicense);
 
       var tempURL = 'https://api.github.com/licenses/' + readmeInput.proLicense;
-      console.log("TempURL = " + tempURL)
 
       const options = {
         url: tempURL,
@@ -137,8 +134,6 @@ async function getUserInput() {
       };
 
       request(options, callback);
-      //getLicenseInfo(readmeInput.proLicense);
-
 
       return true;
 
@@ -165,7 +160,7 @@ async function generateREADME(data) {
   //*####################### Description ###########################
   let proDescription = `
 
-  <h3 align="center">📢 📢 Description 📢 📢</h3>
+  <h3 align="center">📢 Description 📢 </h3>
 
   ----
   <p align="center">${readmeInput.proDescription}</p>
@@ -178,7 +173,7 @@ async function generateREADME(data) {
   //*####################### Table Of Contents ###########################
   let tableOfContents = `
   
-  <h3 align="center">📢 📢 Table Of Contents 📢 📢</h3>
+  <h3 align="center">📑 Table Of Contents 📑</h3>
   
   ----
   [Installation](#install)
@@ -196,7 +191,7 @@ async function generateREADME(data) {
   let installDescription = `
 
   <a name="install">
-  <h3 align="center">📢 📢 Installation 📢 📢</h3>
+  <h3 align="center">🏗️	 Installation 🏗️</h3>
   </a>
 
   ----
@@ -211,7 +206,7 @@ async function generateREADME(data) {
   let usageDescription = `
 
   <a name="usage">
-  <h3 align="center">📢 📢 Usage 📢 📢</h3>
+  <h3 align="center">🏇	Usage 🏇</h3>
   </a>
   
   ----
@@ -227,7 +222,7 @@ async function generateREADME(data) {
   let contributionDescription = `
 
   <a name="guide">
-  <h3 align="center">📢 📢 Contribution Guidelines 📢 📢</h3>
+  <h3 align="center">✍️ Contribution Guidelines ✍️</h3>
   </a>
   
   ----
@@ -242,7 +237,7 @@ async function generateREADME(data) {
   let testDescription = `
 
   <a name="test">
-  <h3 align="center">📢 📢 Test Instructions 📢 📢</h3>
+  <h3 align="center">:🧪 Test Instructions 🧪</h3>
   </a>
   
   ----
@@ -257,7 +252,7 @@ async function generateREADME(data) {
   let licenseDescription = `
 
   <a name="license">
-  <h3 align="center">📢 📢 Project License 📢 📢</h3>
+  <h3 align="center">⚖️ Project License ⚖️</h3>
   </a>
   
   ----
@@ -278,7 +273,7 @@ async function generateREADME(data) {
   let contactInfo = `
 
   <a name="contact">
-  <h3 align="center">📢 📢 Questions/Contact Information 📢 📢</h3>
+  <h3 align="center">☎️ Questions/Contact Information ☎️</h3>
   </a>
   
   ----
@@ -291,7 +286,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //? Write To File README File
+  //? ============== Write To README.md File ==============
   // Generate Readme based on sections defined above
   fs.appendFile('README.md', `${titleHeader}\n${proDescription}\n${tableOfContents}\n${installDescription}\n${usageDescription}\n${contributionDescription}\n${testDescription}\n${licenseDescription}\n${contactInfo}\n`, () => { });
   console.log(`\x1b[43m============= README.md Created! ==============\x1b[0m`);
@@ -327,30 +322,27 @@ function callback(error, response, body) {
 
   if (error) { return console.log(error); }
   body = JSON.parse(body)
-  //console.log(response);
-  // console.log(body.key);
-  // console.log(body.name);
-  // console.log(body.spdx_id);
-  // console.log("BODY 1" + body.body);
+
   licenseReadName = body.name
   licenseBody = body.description;
-  // console.log("BODY = " + licenseBody);
 
   setLicenseBadge(readmeInput.proLicense);
-  //console.log(readmeInput);
+
   generateREADME(readmeInput);
 
 }
 
-//!============== Init ==============
+//!===================== Init ~ Main =====================
+
+//*============== Init ==============
 init();
 
-// !============= Main =============
+//*============== Main ==============
 getUserInput();
 
 
-// !========== END of MAIN =========
+//*=========== END of MAIN ==========
 
 
 
-// !============== EOF =============
+//!========================= EOF =========================
