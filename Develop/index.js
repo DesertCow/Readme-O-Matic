@@ -1,19 +1,8 @@
 // 
 // Clayton Skaggs 6-9-22
 //
-// Installed inquirer vis "npm install inquirer" command
-// - npm install @octokit/core
 // - npm install inquirer
 // - npm install request
-
-// const key = {
-//   method: 'GET',
-//   headers: {
-//     accept: 'application/json',
-//     'X-RapidAPI-Host': 'matchilling-chuck-norris-jokes-v1.p.rapidapi.com',
-//     'X-RapidAPI-Key': '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'
-//   }
-// };
 
 //!===================== Variable Decleration =====================
 
@@ -156,12 +145,12 @@ async function getUserInput() {
     });
 };
 
-// *========================== generateREADME ==========================
+// ?============= generateREADME =============
 async function generateREADME(data) {
 
 
-  //*################### Markup Sections HTML ####################
-  //?####################### Title #######################
+
+  //*####################### Title #######################
   let titleHeader = `
 
   <h2 align="center">${readmeInput.proTitle}</h2>
@@ -173,7 +162,7 @@ async function generateREADME(data) {
   ---
   `;
 
-  //?####################### Description ###########################
+  //*####################### Description ###########################
   let proDescription = `
 
   <h3 align="center">📢 📢 Description 📢 📢</h3>
@@ -186,7 +175,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //?####################### Table Of Contents ###########################
+  //*####################### Table Of Contents ###########################
   let tableOfContents = `
   
   <h3 align="center">📢 📢 Table Of Contents 📢 📢</h3>
@@ -203,7 +192,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //?####################### Installation ###########################
+  //*####################### Installation ###########################
   let installDescription = `
 
   <a name="install">
@@ -218,7 +207,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //?####################### Usage ###########################
+  //*####################### Usage ###########################
   let usageDescription = `
 
   <a name="usage">
@@ -234,7 +223,7 @@ async function generateREADME(data) {
   `;
 
 
-  //?####################### Contrribution ###########################
+  //*####################### Contrribution ###########################
   let contributionDescription = `
 
   <a name="guide">
@@ -249,7 +238,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //?####################### Test ###########################
+  //*####################### Test ###########################
   let testDescription = `
 
   <a name="test">
@@ -264,7 +253,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //?####################### License ###########################
+  //*####################### License ###########################
   let licenseDescription = `
 
   <a name="license">
@@ -285,7 +274,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //?####################### Contact ###########################
+  //*####################### Contact ###########################
   let contactInfo = `
 
   <a name="contact">
@@ -302,7 +291,7 @@ async function generateREADME(data) {
   <br>
   `;
 
-  //* Write To File README File
+  //? Write To File README File
   // Generate Readme based on sections defined above
   fs.appendFile('README.md', `${titleHeader}\n${proDescription}\n${tableOfContents}\n${installDescription}\n${usageDescription}\n${contributionDescription}\n${testDescription}\n${licenseDescription}\n${contactInfo}\n`, () => { });
   console.log(`\x1b[43m============= README.md Created! ==============\x1b[0m`);
@@ -310,7 +299,7 @@ async function generateREADME(data) {
 
 };
 
-// *============= setLicenseBadge =============
+// ?============= setLicenseBadge =============
 function setLicenseBadge(license) {
 
   if (license === "mit") {
@@ -331,25 +320,9 @@ function setLicenseBadge(license) {
 
   }
 
-  //console.log("Badge Text: " + readmeInput.licenseBadge);
 }
 
-// async function fetchLIC(lic) {
-//   // Octokit.js
-//   // https://github.com/octokit/core.js#readme
-//   const octokit = new Octokit({
-//     auth: "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"
-//   })
-
-// await octokit.request('GET /licenses', {
-//   console.log()
-// })
-// }
-
-// *============= getLicenseInfo =============
-
-
-
+// ?============= API callback =============
 function callback(error, response, body) {
 
   if (error) { return console.log(error); }
@@ -369,31 +342,6 @@ function callback(error, response, body) {
 
 }
 
-
-
-// console.log("LIC = " + license + " || " + `https://api.github.com/licenses/${license}`)
-// var apiURL = "https://api.github.com/licenses/" + license;
-
-// fetch(apiURL)
-//   .then(function (respone) {
-
-//     if (respone.status != 200) {
-//       console.log("ERROR API(" + respone.status + ") from " + apiURL);
-//     } else {
-//       return respone.json();
-//     }
-//     return;
-
-//   })
-//   .then(function (data) {
-
-
-//     return;
-//   })
-
-
-
-
 //!============== Init ==============
 init();
 
@@ -402,4 +350,7 @@ getUserInput();
 
 
 // !========== END of MAIN =========
-// console.log(`\x1b[43m========== END of MAIN =========\x1b[0m`);
+
+
+
+// !============== EOF =============
