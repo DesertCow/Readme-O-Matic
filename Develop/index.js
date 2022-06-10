@@ -4,7 +4,7 @@
 // Installed inquirer vis "npm install inquirer" command
 // - npm install @octokit/core
 // - npm install inquirer
-//
+// - npm install request
 
 // const key = {
 //   method: 'GET',
@@ -15,11 +15,15 @@
 //   }
 // };
 
+//!===================== Variable Decleration =====================
+
+//? Import Statments
 const fs = require('fs');
 const inquirer = require('inquirer');
 const { Octokit } = require("@octokit/core");
+const request = require('request');
 
-// List of Questions
+//? List of Questions
 const questions = [
   "Please Enter a Project Title:",
   "Please Enter a Project Description:",
@@ -32,8 +36,10 @@ const questions = [
   "Please Enter your GitHub Email:",
 ];
 
-const listOfLicenses = ["MIT", "GPLv3", "GPLv2", "Apache"];
+//? List of License choices 
+const listOfLicenses = ["mit", "gpl-3.0", "gpl-2.0", "apache-2.0"];
 
+//? Empty object to hold user input
 const readmeInput = {
   proTitle: "",
   proDescription: "",
@@ -43,21 +49,30 @@ const readmeInput = {
   proTestInstuctions: "",
   proLicense: "",
   licenseBadge: "",
+  licenseBody: "",
+  licenseReadName: "",
   userGitHub: "",
   userEmail: ""
 };
 
-//########################### Functions ###########################
+let licenseBody = '';
+
+//!===================== Functions Section =====================
 
 
-// TODO: Create a function to initialize app
+// ?============= init =============
 function init() {
 
-  //console.log(questions);
+  console.log(`\x1b[46m=============== README-O-MATIC ================\x1b[0m`);
+  console.log(`\x1b[46m                    Hello!                     \x1b[0m`);
+  console.log(`\x1b[46mWelcome to the README-O-MATIC Readme Generator!\x1b[0m`);
 
 };
 
-function getUserInput() {
+// ?============= getUserInput =============
+async function getUserInput() {
+
+  await 1
 
   inquirer
     .prompt([
@@ -109,6 +124,8 @@ function getUserInput() {
       },
     ])
     .then(answers => {
+
+      //* Save User input to Object 
       readmeInput.proTitle = answers.proTitle;
       readmeInput.proDescription = answers.proDescription;
       readmeInput.proInstall = answers.proInstall;
@@ -120,19 +137,31 @@ function getUserInput() {
       readmeInput.userEmail = answers.userEmail;
       // console.info('Answer:', readmeInput.proLicense);
 
-      //console.log(readmeInput);
-      generateREADME(readmeInput);
+      var tempURL = 'https://api.github.com/licenses/' + readmeInput.proLicense;
+      console.log("TempURL = " + tempURL)
+
+      const options = {
+        url: tempURL,
+        headers: {
+          'User-Agent': 'DesertCow'
+        }
+      };
+
+      request(options, callback);
+      //getLicenseInfo(readmeInput.proLicense);
+
+
       return true;
 
     });
 };
 
+// *========================== generateREADME ==========================
 async function generateREADME(data) {
 
-  // console.log("README Function PRINT");
-  // console.log(data);
-  // console.log(`${process.argv[2]}\n`);
 
+  //*################### Markup Sections HTML ####################
+  //?####################### Title #######################
   let titleHeader = `
 
   <h2 align="center">${readmeInput.proTitle}</h2>
@@ -144,8 +173,7 @@ async function generateREADME(data) {
   ---
   `;
 
-
-
+  //?####################### Description ###########################
   let proDescription = `
 
   <h3 align="center">📢 📢 Description 📢 📢</h3>
@@ -158,6 +186,7 @@ async function generateREADME(data) {
   <br>
   `;
 
+  //?####################### Table Of Contents ###########################
   let tableOfContents = `
   
   <h3 align="center">📢 📢 Table Of Contents 📢 📢</h3>
@@ -174,6 +203,7 @@ async function generateREADME(data) {
   <br>
   `;
 
+  //?####################### Installation ###########################
   let installDescription = `
 
   <a name="install">
@@ -188,6 +218,7 @@ async function generateREADME(data) {
   <br>
   `;
 
+  //?####################### Usage ###########################
   let usageDescription = `
 
   <a name="usage">
@@ -202,6 +233,8 @@ async function generateREADME(data) {
   <br>
   `;
 
+
+  //?####################### Contrribution ###########################
   let contributionDescription = `
 
   <a name="guide">
@@ -216,6 +249,7 @@ async function generateREADME(data) {
   <br>
   `;
 
+  //?####################### Test ###########################
   let testDescription = `
 
   <a name="test">
@@ -230,6 +264,7 @@ async function generateREADME(data) {
   <br>
   `;
 
+  //?####################### License ###########################
   let licenseDescription = `
 
   <a name="license">
@@ -237,17 +272,20 @@ async function generateREADME(data) {
   </a>
   
   ----
-  <p align="center">This project is licensed under the terms of the ${readmeInput.proLicense} license.</p>
+  <p align="center">This project is licensed under the terms of the ${licenseReadName} license.</p>
   <div align="center">
 
   ${readmeInput.licenseBadge}
 
   </div>
 
+  <div align="center">${licenseBody}</div>
+
   <br>
   <br>
   `;
 
+  //?####################### Contact ###########################
   let contactInfo = `
 
   <a name="contact">
@@ -264,26 +302,30 @@ async function generateREADME(data) {
   <br>
   `;
 
-  fs.appendFile('README.md', `${titleHeader}\n${proDescription}\n${tableOfContents}\n${installDescription}\n${usageDescription}\n${contributionDescription}\n${testDescription}\n${licenseDescription}\n${contactInfo}\n`, () => { })
-
+  //* Write To File README File
+  // Generate Readme based on sections defined above
+  fs.appendFile('README.md', `${titleHeader}\n${proDescription}\n${tableOfContents}\n${installDescription}\n${usageDescription}\n${contributionDescription}\n${testDescription}\n${licenseDescription}\n${contactInfo}\n`, () => { });
+  console.log(`\x1b[43m============= README.md Created! ==============\x1b[0m`);
+  console.log(`\x1b[46m=========== Tool Complete, Goodbye! ===========\x1b[0m`);
 
 };
 
+// *============= setLicenseBadge =============
 function setLicenseBadge(license) {
 
-  if (license === "MIT") {
+  if (license === "mit") {
 
     readmeInput.licenseBadge = "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
 
-  } else if (license === "GPLv3") {
+  } else if (license === "gpl-3.0") {
 
     readmeInput.licenseBadge = "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)";
 
-  } else if (license === "GPLv2") {
+  } else if (license === "gpl-2.0") {
 
     readmeInput.licenseBadge = "[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)";
 
-  } else if (license === "Apache") {
+  } else if (license === "apache-2.0") {
 
     readmeInput.licenseBadge = "[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
 
@@ -304,51 +346,60 @@ function setLicenseBadge(license) {
 // })
 // }
 
-async function getLicenseInfo() {
+// *============= getLicenseInfo =============
 
-  var apiURL = "https://www.themealdb.com/api/json/v1/1/random.php";
 
-  fetch(apiURL)
-    .then(function (respone) {
 
-      if (respone.status != 200) {
-        console.log("ERROR API(" + respone.status + ") from " + apiURL);
-      } else {
-        return respone.json();
-      }
-      return;
+function callback(error, response, body) {
 
-    })
-    .then(function (data) {
+  if (error) { return console.log(error); }
+  body = JSON.parse(body)
+  //console.log(response);
+  // console.log(body.key);
+  // console.log(body.name);
+  // console.log(body.spdx_id);
+  // console.log("BODY 1" + body.body);
+  licenseReadName = body.name
+  licenseBody = body.description;
+  // console.log("BODY = " + licenseBody);
 
-      summary.mealName = data.meals[0].strMeal;
-      summary.mealInstructions = data.meals[0].strInstructions;
-      summary.mealPictureURL = data.meals[0].strMealThumb;
-      summary.mealYouTubeURL = data.meals[0].strYoutube;
+  setLicenseBadge(readmeInput.proLicense);
+  //console.log(readmeInput);
+  generateREADME(readmeInput);
 
-      recipeCardNameTitleEL.textContent = summary.mealName;
-      recipeImgEL.src = summary.mealPictureURL;
-      recipeCardFullrecipeEL.textContent = summary.mealInstructions;
-
-      titleDrinkEL.textContent = summary.drinkName;
-      recipeNameTitleEL.textContent = summary.mealName;
-
-      updateSessionStore();
-
-      return;
-    })
 }
 
-// ============= Init =============
+
+
+// console.log("LIC = " + license + " || " + `https://api.github.com/licenses/${license}`)
+// var apiURL = "https://api.github.com/licenses/" + license;
+
+// fetch(apiURL)
+//   .then(function (respone) {
+
+//     if (respone.status != 200) {
+//       console.log("ERROR API(" + respone.status + ") from " + apiURL);
+//     } else {
+//       return respone.json();
+//     }
+//     return;
+
+//   })
+//   .then(function (data) {
+
+
+//     return;
+//   })
+
+
+
+
+//!============== Init ==============
 init();
 
-// ============= Main =============
+// !============= Main =============
 getUserInput();
 
-// while (userInputFlag) {
-//   // Wait for user to complete input...
-// }
 
-// console.log("User Input COMPLETE!");
-
-// ========== END of MAIN =========
+// !========== END of MAIN =========
+// console.log(`\x1b[43m========== END of MAIN =========\x1b[0m`);
