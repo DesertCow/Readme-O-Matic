@@ -10,7 +10,7 @@
 By Clayton Skaggs<br>
 (WW23.4) / June 9th 2022
 
-Version 0.1</h5>
+Version 0.2</h5>
 </div>
 
 <br>
@@ -27,6 +27,8 @@ Execute by running the following command:
 
 
 ````
+git clone git@github.com:DesertCow/Readme-O-Matic.git
+cd Readme-O-Matic/
 node index.js
 ````
 
@@ -72,16 +74,16 @@ WHEN I enter my email address<br>
 <h3 align="center">⚡ ⚡ App Demo ⚡ ⚡</h3>
 
 ---
- Walkthrough video...<br>
-<p align="center">
-  <img src="./assets/devMeta/Final_Demo.gif" alt="Demo of Readme-O-Matic")
-</p>
+<h4>Demo Video I</h4><br>
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/yfEyAt2Af7c/0.jpg)](https://www.youtube.com/watch?v=yfEyAt2Af7c)
+
 <br>
 <br>
- Add sections with screenshots/app flow/output results<br>
- <br>
-<br>
-<br>
+<h4>Demo Video II</h4><br>
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/tiGZktlOKZw/0.jpg)](https://www.youtube.com/watch?v=tiGZktlOKZw)
+
 <br>
 <br>
 
